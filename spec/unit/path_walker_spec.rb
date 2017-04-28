@@ -61,4 +61,12 @@ RSpec.describe TTY::Tree::PathWalker do
 
     expect(walker.dirs_count).to eq(1)
   end
+
+  it "raises when walking non-directory" do
+    walker = TTY::Tree::PathWalker.new
+
+    expect {
+      walker.traverse('unknown-dir')
+    }.to raise_error(ArgumentError, /unknown-dir is not a directory path/)
+  end
 end
