@@ -12,4 +12,11 @@ RSpec.describe TTY::Tree::Node do
     expect(node.socket?).to eq(false)
     expect(node.pipe?).to eq(false)
   end
+
+  it "informs if node is hidden" do
+    file = fixtures_path('hidden', 'dir1', '.file1.2')
+    node = TTY::Tree::Node.new(file, '', '', 0)
+
+    expect(node.hidden?).to eq(true)
+  end
 end

@@ -46,6 +46,10 @@ module TTY
         parent.to_s.empty?
       end
 
+      def hidden?
+        name.to_s.start_with?('.')
+      end
+
       def leaf?
         false
       end
