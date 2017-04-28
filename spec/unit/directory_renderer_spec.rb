@@ -106,4 +106,54 @@ RSpec.describe TTY::Tree::DirectoryRenderer do
       "└── file1-2.txt\n",
     ].join)
   end
+
+  it "renders directory without hidden files" do
+    tree = within_dir(fixtures_path) do
+      TTY::Tree.new('hidden_dir', show_hidden: true)
+    end
+
+    expect(tree.render).to eq([
+      "hidden_dir\n",
+      "├── .with_dot\n",
+      "│   └── config.dat\n",
+      "├── dir1\n",
+      "│   ├── .file1.2\n",
+      "│   ├── dir1.1\n",
+      "│   │   └── .file1.1.1\n",
+      "│   ├── dir1.2\n",
+      "│   │   └── file1.2.1\n",
+      "│   └── file1.1\n",
+      "└── dir2\n",
+      "    └── .file2.1\n",
+    ].join)
+  end
+
+  it "renders directory with only dirs" do
+    tree = within_dir(fixtures_path) do
+      TTY::Tree.new('hidden_dir', only_dirs: true)
+    end
+
+    expect(tree.render).to eq([
+      "hidden_dir\n",
+      "├── dir1\n",
+      "│   ├── dir1.1\n",
+      "│   └── dir1.2\n",
+      "└── dir2\n",
+    ].join)
+  end
+
+  it "renders directory with only dirs including hidden ones" do
+    tree = within_dir(fixtures_path) do
+      TTY::Tree.new('hidden_dir', only_dirs: true, show_hidden: true)
+    end
+
+    expect(tree.render).to eq([
+      "hidden_dir\n",
+      "├── .with_dot\n",
+      "├── dir1\n",
+      "│   ├── dir1.1\n",
+      "│   └── dir1.2\n",
+      "└── dir2\n",
+    ].join)
+  end
 end

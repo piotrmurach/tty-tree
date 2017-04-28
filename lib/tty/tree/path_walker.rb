@@ -24,7 +24,20 @@ module TTY
         @files_count = 0
         @dirs_count  = 0
         @nodes       = []
+        @filters     = []
         @max_level   = options.fetch(:max_level) { -1 }
+
+        unless options[:show_hidden]
+          add_filter(-> (p) { !p.basename.to_s.start_with?('.') })
+        end
+
+        if options[:only_dirs]
+          add_filter(-> (p) { p.directory? })
+        end
+      end
+
+      def add_filter(filter)
+        @filters << filter
       end
 
       # Traverse given path recursively
@@ -48,17 +61,23 @@ module TTY
 
       private
 
-      # Filter paths
-      def filter(files)
-        files
+      # Filter entries
+      #
+      # @api private
+      def filter_entries(entries, filters)
+        return entries if filters.nil? || filters.empty?
+        filter = filters[0]
+        filter_entries(entries.select(&filter), filters[1..-1])
       end
 
       # Walk paths recursively
+      #
+      # @api private
       def walk(parent_path, files, prefix, level)
         if files.empty? || (@max_level != -1 && @max_level < level)
           return
         else
-          processed_paths = filter(files).sort
+          processed_paths = filter_entries(files, @filters).sort
           last_path_index = processed_paths.size - 1
 
           processed_paths.each_with_index do |path, i|

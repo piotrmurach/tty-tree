@@ -21,9 +21,9 @@ module TTY
     # @param [String,Dir,Hash] data
     #
     # @api public
-    def initialize(data)
+    def initialize(data, options = {})
       @data   = data.dup.freeze
-      @walker = select_walker
+      @walker = select_walker.new(options)
 
       @walker.traverse(data)
       @nodes = @walker.nodes
@@ -41,10 +41,10 @@ module TTY
     # @api private
     def select_walker
       if @data.is_a?(Hash)
-        HashWalker.new
+        HashWalker
       else
         @data ||= Dir.pwd
-        PathWalker.new
+        PathWalker
       end
     end
 
