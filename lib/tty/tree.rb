@@ -9,6 +9,13 @@ require_relative 'tree/version'
 
 module TTY
   class Tree
+    # @api public
+    def self.[](data)
+      self.new(data)
+    end
+
+    attr_reader :nodes
+
     # Create a Tree
     #
     # @param [String,Dir,Hash] data
@@ -19,12 +26,13 @@ module TTY
       @walker = select_walker
 
       @walker.traverse(data)
+      @nodes = @walker.nodes
     end
 
     # @api public
     def render(options = {})
       as = options.delete(:as) || :dir
-      renderer = select_renderer(as).new(@walker.nodes, options)
+      renderer = select_renderer(as).new(nodes, options)
       renderer.render
     end
 
