@@ -39,7 +39,10 @@ Or install it yourself as:
 
 * [1. Usage](#1-usage)
 * [2. Interface](#2-interface)
-  * [2.1 options](#21-options)
+  * [2.1 new](#21-new)
+    * [2.1.1 max_level](#211-max_level)
+  * [2.2 render](#22-render)
+    * [2.2.1 render](#221-render)
 
 ## 1. Usage
 
@@ -88,15 +91,69 @@ The `render` call returns a string and leaves it up to api consumer how to handl
 
 ## 2. Interface
 
-### 2.1 Options
+### 2.1 new
 
-### :max_level
+In order to create `TTY::Tree` you need to provide either a path to directory which can be a String, Pathname or Dir:
+
+```ruby
+tree = TTY::Tree.new(Dir.pwd)
+tree = TTY::Tree.new('dir-name')
+tree = TTY::Tree.new(Pathname.pwd)
+```
+
+or hash data structure:
+
+```ruby
+data = {
+  dir1: [
+    'config.dat',
+    ...
+  ]
+}
+
+tree = TTY::Tree.new(data)
+```
+
+As as shortcut notation you can call `[]` like so:
+
+```ruby
+tree = TTY::Tree[Dir.pwd]
+```
+
+#### 2.1.1 max_level
 
 The maximum level of depth for this tree when parsing directory. The initial directory is treated as index `0`.
 
 ```ruby
 tree = TTY::Tree.new(max_level: 2)
 # => parse directories as deep as 2 levels
+```
+
+### 2.2 render
+
+By deafult content is printed using `TTY::PathRenderer`.
+
+If you prefer a numeric notation of nested content you can use `TTY::NumberRenderer` to enumerates each nested node like so:
+
+```ruby
+puts tree.render(as: :number)
+# =>
+# dir1\n",
+# 1.1 config.dat\n",
+# 1.2 dir2\n",
+#     2.3 dir3\n",
+#         3.4 file3-1.txt\n",
+#     2.5 file2-1.txt\n",
+# 1.6 file1-1.txt\n",
+# 1.7 file1-2.txt\n",
+```
+
+#### 2.2.1 indent
+
+The number of spaces to use when indenting nested directories. By default `4` spaces are used.
+
+```ruby
+tree.render(as: :dir, indent: 2)
 ```
 
 ## Development
@@ -112,4 +169,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/piotrm
 ## Copyright
 
 Copyright (c) 2017 Piotr Murach. See LICENSE for further details.
-
