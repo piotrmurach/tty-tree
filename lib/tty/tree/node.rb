@@ -1,19 +1,38 @@
 # encoding: utf-8
 # frozen_string_literal: true
 
+require 'forwardable'
+require 'pathname'
+
 module TTY
   class Tree
     # A representation of tree node
     #
     # @api private
     class Node
-      attr_reader :name,
-                  :parent,
-                  :prefix,
-                  :level
+      extend Forwardable
 
-      def initialize(name, parent, prefix, level)
-        @name   = name
+      # The base name for the directory or file
+      attr_reader :name
+
+      # The parent directory path
+      attr_reader :parent
+
+      # The require path prefix
+      attr_reader :prefix
+
+      # The directory depth
+      attr_reader :level
+
+      # The file stat
+      attr_reader :stat
+
+      def_delegators :@path, :directory?, :executable?, :file?,
+                     :symlink?, :socket?, :pipe?
+
+      def initialize(path, parent, prefix, level)
+        @path   = Pathname.new(path)
+        @name   = @path.basename
         @parent = parent
         @prefix = prefix
         @level  = level

@@ -77,7 +77,7 @@ module TTY
 
               walk(path, path.children, prefix + postfix, level + 1)
             elsif path.file?
-              @nodes << node.new(path.basename, parent_path, prefix, level)
+              @nodes << node.new(path, parent_path, prefix, level)
               @files_count += 1
             end
           end
