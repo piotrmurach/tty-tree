@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 require_relative 'tree/directory_renderer'
+require_relative 'tree/number_renderer'
 require_relative 'tree/hash_walker'
 require_relative 'tree/path_walker'
 require_relative 'tree/version'
@@ -22,7 +23,8 @@ module TTY
 
     # @api public
     def render(options = {})
-      renderer = DirectoryRenderer.new(@walker.nodes, options)
+      as = options.delete(:as) || :dir
+      renderer = select_renderer(as).new(@walker.nodes, options)
       renderer.render
     end
 
@@ -35,6 +37,13 @@ module TTY
       else
         @data ||= Dir.pwd
         PathWalker.new
+      end
+    end
+
+    def select_renderer(as)
+      case as
+      when :dir, :directory then DirectoryRenderer
+      when :num, :number then NumberRenderer
       end
     end
   end # Tree
