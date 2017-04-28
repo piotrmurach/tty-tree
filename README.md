@@ -2,7 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/tty-tree.svg)][gem]
 [![Build Status](https://secure.travis-ci.org/piotrmurach/tty-tree.svg?branch=master)][travis]
-[![Build status](https://ci.appveyor.com/api/projects/status/4cguoiah5dprbq7n?svg=true)][appveyor]
+[![Build status](https://ci.appveyor.com/api/projects/status/q3s4gagj8xnospw4?svg=true)][appveyor]
 [![Code Climate](https://codeclimate.com/github/piotrmurach/tty-tree/badges/gpa.svg)][codeclimate]
 [![Coverage Status](https://coveralls.io/repos/github/piotrmurach/tty-tree/badge.svg)][coverage]
 [![Inline docs](http://inch-ci.org/github/piotrmurach/tty-tree.svg?branch=master)][inchpages]
