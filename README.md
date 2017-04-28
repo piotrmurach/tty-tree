@@ -40,9 +40,11 @@ Or install it yourself as:
 * [1. Usage](#1-usage)
 * [2. Interface](#2-interface)
   * [2.1 new](#21-new)
-    * [2.1.1 max_level](#211-max_level)
+    * [2.1.1 level](#211-level)
+    * [2.1.2 show_hidden](#212-show_hidden)
+    * [2.1.3 only_dirs](#213-only_dirs)
   * [2.2 render](#22-render)
-    * [2.2.1 render](#221-render)
+    * [2.2.1 indent](#221-indent)
 
 ## 1. Usage
 
@@ -120,13 +122,35 @@ As as shortcut notation you can call `[]` like so:
 tree = TTY::Tree[Dir.pwd]
 ```
 
-#### 2.1.1 max_level
+#### 2.1.1 level
 
 The maximum level of depth for this tree when parsing directory. The initial directory is treated as index `0`.
 
 ```ruby
-tree = TTY::Tree.new(max_level: 2)
+tree = TTY::Tree.new('dir-name', level: 2)
 # => parse directories as deep as 2 levels
+```
+
+#### 2.1.2 show_hidden
+
+In order to for `TTY::Tree` to include hidden files in its output use `:show_hidden` option like so:
+
+```ruby
+tree = TTY::Tree.new('dir-name', show_hidden: true)
+```
+
+#### 2.1.3 only_dirs
+
+To only display directory entries in the output use `:only_dirs` option:
+
+```ruby
+tree = TTY::Tree.new('dir-name', only_dirs: true)
+```
+
+Listing directories does not inlucde hidden ones. If you wish to show hidden directories as well do:
+
+```ruby
+tree = TTY::Tree.new('dir-name', only_dirs: true, show_hidden: true)
 ```
 
 ### 2.2 render
