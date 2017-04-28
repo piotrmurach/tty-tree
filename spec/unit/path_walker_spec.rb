@@ -22,7 +22,7 @@ RSpec.describe TTY::Tree::PathWalker do
   end
 
   it "walks path tree and collects nodes" do
-    walker = TTY::Tree::PathWalker.new(max_level: 2)
+    walker = TTY::Tree::PathWalker.new(level: 2)
 
     within_dir(fixtures_path) do
       walker.traverse('dir1')
@@ -51,7 +51,7 @@ RSpec.describe TTY::Tree::PathWalker do
   end
 
   it "counts files & dirs including max level limit" do
-    walker = TTY::Tree::PathWalker.new(max_level: 2)
+    walker = TTY::Tree::PathWalker.new(level: 2)
 
     within_dir(fixtures_path) do
       walker.traverse('dir1')

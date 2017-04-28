@@ -46,7 +46,7 @@ RSpec.describe TTY::Tree::HashWalker do
       ]
     }
 
-    walker = TTY::Tree::HashWalker.new(max_level: 2)
+    walker = TTY::Tree::HashWalker.new(level: 2)
 
     walker.traverse(data)
 

@@ -20,12 +20,12 @@ module TTY
       # Create a PathWalker
       #
       # @api public
-      def initialize(options = {})
+      def initialize(**options)
         @files_count = 0
         @dirs_count  = 0
         @nodes       = []
         @filters     = []
-        @max_level   = options.fetch(:max_level) { -1 }
+        @level       = options.fetch(:level) { -1 }
 
         unless options[:show_hidden]
           add_filter(-> (p) { !p.basename.to_s.start_with?('.') })
@@ -74,7 +74,7 @@ module TTY
       #
       # @api private
       def walk(parent_path, files, prefix, level)
-        if files.empty? || (@max_level != -1 && @max_level < level)
+        if files.empty? || (@level != -1 && @level < level)
           return
         else
           processed_paths = filter_entries(files, @filters).sort
@@ -86,7 +86,7 @@ module TTY
             node = last_path_index == i ? LeafNode : Node
 
             if path.directory?
-              next if @max_level != -1 && level + 1 > @max_level
+              next if @level != -1 && level + 1 > @level
 
               @nodes << node.new(sub_path, parent_path, prefix, level)
               @dirs_count += 1

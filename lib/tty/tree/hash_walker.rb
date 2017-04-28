@@ -21,7 +21,7 @@ module TTY
         @nodes       = []
         @files_count = 0
         @dirs_count  = 0
-        @max_level   = options.fetch(:max_level) { -1 }
+        @level       = options.fetch(:level) { -1 }
       end
 
       def traverse(data)
@@ -33,7 +33,7 @@ module TTY
 
         case data
         when Hash
-          return if @max_level != -1 && level + 1 > @max_level
+          return if @level != -1 && level + 1 > @level
 
           data.each do |dir, item|
             dir_node = node.new(Pathname.new(dir.to_s), parent_path, prefix, level)
