@@ -156,4 +156,18 @@ RSpec.describe TTY::Tree::DirectoryRenderer do
       "└── dir2\n",
     ].join)
   end
+
+  it "doesn't show dirs with files exceeding limit" do
+    tree = within_dir(fixtures_path) do
+      TTY::Tree.new('large_dir', file_limit: 4)
+    end
+
+    expect(tree.render).to eq([
+      "large_dir\n",
+      "├── huge_dir\n",
+      "├── large1\n",
+      "├── large2\n",
+      "└── large3\n",
+    ].join)
+  end
 end
