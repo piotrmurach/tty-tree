@@ -10,14 +10,14 @@ RSpec.describe TTY::Tree::PathWalker do
     end
 
     expect(walker.nodes).to eq([
-      TTY::Tree::Node.new('dir1', Pathname.new(''), '', 0),
-      TTY::Tree::Node.new('dir1/config.dat', Pathname.new('dir1'), '', 1),
-      TTY::Tree::Node.new('dir2', Pathname.new('dir1'), '', 1),
-      TTY::Tree::Node.new('dir3', Pathname.new('dir1/dir2'), ':pipe', 2),
-      TTY::Tree::LeafNode.new('dir1/dir2/dir3/file3-1.txt', Pathname.new('dir1/dir2/dir3'), ':pipe:pipe', 3),
-      TTY::Tree::LeafNode.new('dir1/dir2/file2-1.txt', Pathname.new('dir1/dir2'), ':pipe', 2),
-      TTY::Tree::Node.new('dir1/file1-1.txt', Pathname.new('dir1'), '', 1),
-      TTY::Tree::LeafNode.new('dir1/file1-2.txt', Pathname.new('dir1'), '', 1),
+      TTY::Tree::Node.new('dir1', '', '', 0),
+      TTY::Tree::Node.new('dir1/config.dat', 'dir1', '', 1),
+      TTY::Tree::Node.new('dir2', 'dir1', '', 1),
+      TTY::Tree::Node.new('dir3', 'dir1/dir2', ':pipe', 2),
+      TTY::Tree::LeafNode.new('dir1/dir2/dir3/file3-1.txt', 'dir1/dir2/dir3', ':pipe:pipe', 3),
+      TTY::Tree::LeafNode.new('dir1/dir2/file2-1.txt', 'dir1/dir2', ':pipe', 2),
+      TTY::Tree::Node.new('dir1/file1-1.txt', 'dir1', '', 1),
+      TTY::Tree::LeafNode.new('dir1/file1-2.txt', 'dir1', '', 1),
     ])
 
     expect(walker.nodes.map(&:full_path).map(&:to_s)).to eq([
@@ -40,13 +40,13 @@ RSpec.describe TTY::Tree::PathWalker do
     end
 
     expect(walker.nodes).to eq([
-      TTY::Tree::Node.new("orphan_dir", Pathname.new(''), '', 0),
-      TTY::Tree::Node.new("orphan_dir/a.txt", Pathname.new('orphan_dir'), '', 1),
-      TTY::Tree::Node.new("orphan_dir/b.txt", Pathname.new('orphan_dir'), '', 1),
-      TTY::Tree::LeafNode.new("data", Pathname.new('orphan_dir'), '',  1),
-      TTY::Tree::Node.new("orphan_dir/data/data1.bin", Pathname.new('orphan_dir/data'), ':space', 2),
-      TTY::Tree::Node.new("orphan_dir/data/data2.sql", Pathname.new('orphan_dir/data'), ':space', 2),
-      TTY::Tree::LeafNode.new("orphan_dir/data/data3.inf", Pathname.new('orphan_dir/data'), ':space', 2)
+      TTY::Tree::Node.new("orphan_dir", '', '', 0),
+      TTY::Tree::Node.new("orphan_dir/a.txt", 'orphan_dir', '', 1),
+      TTY::Tree::Node.new("orphan_dir/b.txt", 'orphan_dir', '', 1),
+      TTY::Tree::LeafNode.new("data", 'orphan_dir', '',  1),
+      TTY::Tree::Node.new("orphan_dir/data/data1.bin", 'orphan_dir/data', ':space', 2),
+      TTY::Tree::Node.new("orphan_dir/data/data2.sql", 'orphan_dir/data', ':space', 2),
+      TTY::Tree::LeafNode.new("orphan_dir/data/data3.inf", 'orphan_dir/data', ':space', 2)
     ])
 
     expect(walker.nodes.map(&:full_path).map(&:to_s)).to eq([
