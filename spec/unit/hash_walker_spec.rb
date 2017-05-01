@@ -71,6 +71,33 @@ RSpec.describe TTY::Tree::HashWalker do
     ])
   end
 
+  it "doesn't walks path tree exceeding file limit" do
+    data = {
+      orphan_dir: [
+        'a.txt',
+        'b.txt',
+        { data: [
+            'data1.bin',
+            'data2.sql',
+            'data3.inf',
+            'data4.csv'
+          ]
+        }
+      ]
+    }
+
+    walker = TTY::Tree::HashWalker.new(file_limit: 3)
+
+    walker.traverse(data)
+
+    expect(walker.nodes.map(&:full_path).map(&:to_s)).to eq([
+      "orphan_dir",
+      "orphan_dir/a.txt",
+      "orphan_dir/b.txt",
+      "orphan_dir/data"
+    ])
+  end
+
   it "counts files & dirs" do
     data = {
       dir1: [

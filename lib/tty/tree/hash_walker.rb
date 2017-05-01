@@ -22,6 +22,7 @@ module TTY
         @files_count = 0
         @dirs_count  = 0
         @level       = options.fetch(:level) { -1 }
+        @file_limit  = options.fetch(:file_limit) { - 1 }
       end
 
       def traverse(data)
@@ -51,6 +52,8 @@ module TTY
                  prefix + postfix, level + 1, false)
           end
         when Array
+          return if @file_limit != -1 && data.size > @file_limit
+
           last_data_index = data.size - 1
 
           data.each_with_index do |item, i|
