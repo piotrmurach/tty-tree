@@ -74,6 +74,24 @@ data = {
 tree = TTY::Tree.new(data)
 ```
 
+You can also construct tree with a DSL:
+
+```ruby
+tree = TTY::Tree.new do
+  node 'dir1' do
+    node 'config.dat'
+    node 'dir2' do
+      node 'dir3' do
+        leaf 'file3-1.txt'
+      end
+      leaf 'file2-1.txt'
+    end
+    node 'file1-1.txt'
+    leaf 'file1-2.txt'
+  end
+end
+```
+
 The `TTY::Tree` can print the content in various formats. By default, a directory format is used by invoking `render`:
 
 ```ruby
@@ -120,6 +138,24 @@ As as shortcut notation you can call `[]` like so:
 
 ```ruby
 tree = TTY::Tree[Dir.pwd]
+```
+
+You can also use DSL to build tree by using `node` & `leaf`:
+
+```ruby
+tree = TTY::Tree.new do
+  node 'dir1' do
+    node 'config.dat'
+    node 'dir2' do
+      node 'dir3' do
+        leaf 'file3-1.txt'
+      end
+      leaf 'file2-1.txt'
+    end
+    node 'file1-1.txt'
+    leaf 'file1-2.txt'
+  end
+end
 ```
 
 #### 2.1.1 level
