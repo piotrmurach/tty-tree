@@ -21,20 +21,25 @@ module TTY
       def initialize(nodes, options = {})
         @nodes  = nodes
         @indent = options.fetch(:indent, 4)
+        @pipe_mark  = MARKERS[:unicode][:pipe] + ' ' * [@indent - 1, 0].max
+        @space_mark = ' ' * @indent
       end
 
       def render
-        pipe_mark  = MARKERS[:unicode][:pipe] + ' ' * [@indent - 1, 0].max
-        space_mark = ' ' * @indent
-
         @nodes.reduce([]) do |acc, node|
-          acc << node.prefix.gsub(/:pipe/, pipe_mark).gsub(/:space/, space_mark)
-          unless node.root?
-            acc << MARKERS[:unicode][node.leaf? ? :leaf : :branch]
-            acc << ' '
-          end
-          acc << node.name.to_s + "\n"
+          render_node(acc, node, @pipe_mark, @space_mark)
         end.join('')
+      end
+
+      private
+
+      def render_node(acc, node, pipe_mark, space_mark)
+        acc << node.prefix.gsub(/:pipe/, pipe_mark).gsub(/:space/, space_mark)
+        unless node.root?
+          acc << MARKERS[:unicode][node.leaf? ? :leaf : :branch]
+          acc << ' '
+        end
+        acc << node.name.to_s + "\n"
       end
     end # DirRenderer
   end # Tree
