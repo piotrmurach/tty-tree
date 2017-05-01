@@ -41,8 +41,9 @@ Or install it yourself as:
 * [2. Interface](#2-interface)
   * [2.1 new](#21-new)
     * [2.1.1 level](#211-level)
-    * [2.1.2 show_hidden](#212-show_hidden)
-    * [2.1.3 only_dirs](#213-only_dirs)
+    * [2.1.2 file_limit](#212-level)
+    * [2.1.3 show_hidden](#213-show_hidden)
+    * [2.1.4 only_dirs](#214-only_dirs)
   * [2.2 render](#22-render)
     * [2.2.1 indent](#221-indent)
 
@@ -167,7 +168,15 @@ tree = TTY::Tree.new('dir-name', level: 2)
 # => parse directories as deep as 2 levels
 ```
 
-#### 2.1.2 show_hidden
+#### 2.1.2 file_limit
+
+Prevent `TTY::Tree` descending directories more than `#` entries:
+
+```ruby
+tree = TTY::Tree.new('dir-name', file_limit: 2)
+```
+
+#### 2.1.3 show_hidden
 
 In order to for `TTY::Tree` to include hidden files in its output use `:show_hidden` option like so:
 
@@ -175,7 +184,7 @@ In order to for `TTY::Tree` to include hidden files in its output use `:show_hid
 tree = TTY::Tree.new('dir-name', show_hidden: true)
 ```
 
-#### 2.1.3 only_dirs
+#### 2.1.4 only_dirs
 
 To only display directory entries in the output use `:only_dirs` option:
 
