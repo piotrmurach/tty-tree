@@ -19,4 +19,18 @@ RSpec.describe TTY::Tree::Node do
 
     expect(node.hidden?).to eq(true)
   end
+
+  it "compares two nodes for equality" do
+    node_a = TTY::Tree::Node.new('dir1', '', '', 0)
+    node_b = TTY::Tree::Node.new('dir1', '', '', 0)
+
+    expect(node_a).to eq(node_b)
+  end
+
+  it "compares two nodes for inequlity" do
+    node_a = TTY::Tree::Node.new('dir1', '', '', 0)
+    node_b = TTY::Tree::Node.new('dir2', '', '', 0)
+
+    expect(node_a).to_not eq(node_b)
+  end
 end

@@ -27,6 +27,9 @@ module TTY
       # The file stat
       attr_reader :stat
 
+      # The current path
+      attr_reader :path
+
       def_delegators :@path, :directory?, :executable?, :file?,
                      :symlink?, :socket?, :pipe?
 
@@ -57,12 +60,25 @@ module TTY
       def to_s
         @name
       end
+
+      def ==(other)
+        other.is_a?(self.class) && other.state_attrs == state_attrs
+      end
+      alias eql? ==
+
+      protected
+
+      def state_attrs
+        [@name, @path, @parent, @level]
+      end
+
+      ROOT = Node.new(Pathname.new(''), '', '', 0).freeze
     end # Node
 
     class LeafNode < Node
       def leaf?
         true
       end
-    end
+    end # LeafNode
   end # Tree
 end # TTY
