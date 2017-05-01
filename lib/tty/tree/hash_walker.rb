@@ -36,7 +36,7 @@ module TTY
           return if @level != -1 && level + 1 > @level
 
           data.each do |dir, item|
-            dir_node = node.new(Pathname.new(dir.to_s), parent_path, prefix, level)
+            dir_node = node.new(dir.to_s, parent_path, prefix, level)
             @nodes << dir_node
             @dirs_count += 1 unless dir_node.root?
 
@@ -59,8 +59,7 @@ module TTY
             walk(item, parent_path, prefix, level, last)
           end
         else
-          @nodes << node.new(Pathname.new(data.to_s), parent_path,
-                             prefix, level)
+          @nodes << node.new(data.to_s, parent_path, prefix, level)
           @files_count += 1
         end
       end
