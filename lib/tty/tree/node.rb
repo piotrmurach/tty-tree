@@ -70,7 +70,7 @@ module TTY
       protected
 
       def state_attrs
-        [@name, @path, @parent, @level]
+        [@name, @path, @parent, @prefix, @level]
       end
 
       ROOT = Node.new('', Pathname.new(''), '', 0).freeze
