@@ -77,6 +77,22 @@ RSpec.describe TTY::Tree::PathWalker do
     ])
   end
 
+  it "doesn't walk paths exceeding file limit" do
+    walker = TTY::Tree::PathWalker.new(file_limit: 4)
+
+    within_dir(fixtures_path) do
+      walker.traverse('large_dir')
+    end
+
+    expect(walker.nodes.map(&:full_path).map(&:to_s)).to eq([
+      "large_dir",
+      "large_dir/huge_dir",
+      "large_dir/large1",
+      "large_dir/large2",
+      "large_dir/large3"
+    ])
+  end
+
   it "counts files & dirs" do
     walker = TTY::Tree::PathWalker.new
 

@@ -26,6 +26,7 @@ module TTY
         @nodes       = []
         @filters     = []
         @level       = options.fetch(:level) { -1 }
+        @file_limit  = options.fetch(:file_limit) { - 1 }
 
         unless options[:show_hidden]
           add_filter(-> (p) { !p.basename.to_s.start_with?('.') })
@@ -73,11 +74,12 @@ module TTY
       # Walk paths recursively
       #
       # @api private
-      def walk(parent_path, files, prefix, level)
-        if files.empty? || (@level != -1 && @level < level)
+      def walk(parent_path, entries, prefix, level)
+        if entries.empty? || (@level != -1 && @level < level)
           return
         else
-          processed_paths = filter_entries(files, @filters).sort
+          return if @file_limit != -1 && entries.size > @file_limit
+          processed_paths = filter_entries(entries, @filters).sort
           last_path_index = processed_paths.size - 1
 
           processed_paths.each_with_index do |path, i|
