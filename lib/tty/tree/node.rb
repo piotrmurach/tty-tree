@@ -42,6 +42,7 @@ module TTY
       end
 
       def full_path
+        return parent if name.to_s.empty?
         parent.join(name)
       end
 
@@ -72,7 +73,7 @@ module TTY
         [@name, @path, @parent, @level]
       end
 
-      ROOT = Node.new(Pathname.new(''), '', '', 0).freeze
+      ROOT = Node.new('', Pathname.new(''), '', 0).freeze
     end # Node
 
     class LeafNode < Node
