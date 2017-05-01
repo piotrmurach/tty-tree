@@ -20,6 +20,17 @@ RSpec.describe TTY::Tree::HashWalker do
 
     walker.traverse(data)
 
+    expect(walker.nodes).to eq([
+      TTY::Tree::Node.new('dir1', Pathname.new(''), '', 0),
+      TTY::Tree::Node.new('config.dat', Pathname.new('dir1'), '', 1),
+      TTY::Tree::Node.new('dir2', Pathname.new('dir1'), '', 1),
+      TTY::Tree::Node.new('dir3', Pathname.new('dir1/dir2'), ':pipe', 2),
+      TTY::Tree::LeafNode.new('file3-1.txt', Pathname.new('dir1/dir2/dir3'), ':pipe:pipe', 3),
+      TTY::Tree::LeafNode.new('file2-1.txt', Pathname.new('dir1/dir2'), ':pipe', 2),
+      TTY::Tree::Node.new('file1-1.txt', Pathname.new('dir1'), '', 1),
+      TTY::Tree::LeafNode.new('file1-2.txt', Pathname.new('dir1'), '', 1),
+    ])
+
     expect(walker.nodes.map(&:full_path).map(&:to_s)).to eq([
       "dir1",
       "dir1/config.dat",
