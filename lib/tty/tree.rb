@@ -36,6 +36,8 @@ module TTY
       @nodes_stack = []
 
       instance_eval(&block) if block_given?
+
+      freeze
     end
 
     # Add node to this tree.
