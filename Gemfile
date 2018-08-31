@@ -3,10 +3,9 @@ source 'https://rubygems.org'
 gemspec
 
 group :test do
-  gem 'benchmark-ips', '~> 2.0.0'
-  gem 'simplecov', '~> 0.10.0'
-  gem 'coveralls', '~> 0.8.2'
-  gem 'term-ansicolor', '=1.3.2'
+  gem 'benchmark-ips', '~> 2.7.2'
+  gem 'simplecov', '~> 0.16.1'
+  gem 'coveralls', '~> 0.8.22'
 end
 
 group :tools do
@@ -14,6 +13,5 @@ group :tools do
 end
 
 group :metrics do
-  gem 'yard',      '~> 0.8.7'
   gem 'yardstick', '~> 0.9.9'
 end
