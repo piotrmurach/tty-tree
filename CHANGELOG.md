@@ -9,4 +9,5 @@
 
 * Initial implementation and release
 
+[v0.2.0]: https://github.com/piotrmurach/tty-tree/compare/v0.1.0...v0.2.0
 [v0.1.0]: https://github.com/piotrmurach/tty-tree/compare/v0.1.0
