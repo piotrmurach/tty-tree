@@ -21,7 +21,7 @@
 
 > Print directory or structured data in a tree like format.
 
-**TTY::Prompt** provides independent directory or hash data rendering component for [TTY](https://github.com/piotrmurach/tty) toolkit.
+**TTY::Tree** provides independent directory or hash data rendering component for [TTY](https://github.com/piotrmurach/tty) toolkit.
 
 ## Installation
 
