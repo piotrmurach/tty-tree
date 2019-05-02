@@ -33,7 +33,12 @@ module TTY
                      :symlink?, :socket?, :pipe?
 
       def initialize(path, parent, prefix, level)
-        @path   = Pathname.new(path)
+        if path.is_a? String
+          # strip null bytes from the string to avoid throwing errors
+          path = path.delete("\0")
+        end
+
+        @path = Pathname.new(path)
         @name   = @path.basename
         @parent = Pathname.new(parent)
         @prefix = prefix
@@ -42,6 +47,7 @@ module TTY
 
       def full_path
         return parent if name.to_s.empty?
+
         parent.join(name)
       end
 
