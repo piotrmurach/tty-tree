@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.name          = "tty-tree"
   spec.version       = TTY::Tree::VERSION
   spec.authors       = ["Piotr Murach"]
-  spec.email         = [""]
+  spec.email         = ["me@piotrmurach.com"]
 
   spec.summary       = %q{Print directory or structured data in a tree like format.}
   spec.description   = %q{Print directory or structured data in a tree like format.}
@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 2.0.0'
 
-  spec.add_development_dependency "bundler", "~> 2.0"
-  spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "bundler", ">= 1.14.0"
+  spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec", "~> 3.0"
 end
