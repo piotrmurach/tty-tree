@@ -19,7 +19,7 @@ module TTY
       # Create a PathWalker
       #
       # @api public
-      def initialize(**options)
+      def initialize(options = {})
         @files_count = 0
         @dirs_count  = 0
         @nodes       = []
