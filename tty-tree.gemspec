@@ -25,6 +25,8 @@ Gem::Specification.new do |spec|
   spec.executables   = []
   spec.require_paths = ["lib"]
   spec.required_ruby_version = ">= 2.0.0"
+  spec.cert_chain  = ["certs/piotrmurach.pem"]
+  spec.signing_key = File.expand_path("~/.ssh/gem-private_key.pem") if $0 =~ /gem\z/
 
   spec.add_development_dependency "bundler", ">= 1.14.0"
   spec.add_development_dependency "rake"
