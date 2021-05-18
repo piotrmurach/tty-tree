@@ -28,7 +28,7 @@
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'tty-tree'
+gem "tty-tree"
 ```
 
 And then execute:
@@ -57,22 +57,21 @@ Or install it yourself as:
 
 ```ruby
 tree = TTY::Tree.new(Dir.pwd)
-tree = TTY::Tree.new('dir-name')
+tree = TTY::Tree.new("dir-name")
 ```
 
-or can be given as its input a `hash` data structure with keys representing directories and values as `array`s representing directory contents:
+It can also be given as its input a `hash` data structure with keys representing directories and values as `array`s representing directory contents:
 
 ```ruby
 data = {
   dir1: [
-    'config.dat',
-    { dir2: [
-      { dir3: [ 'file3-1.txt' ] },
-      'file2-1.txt'
-      ]
-    },
-    'file1-1.txt',
-    'file1-2.txt'
+    "config.dat",
+    {dir2: [
+      {dir3: ["file3-1.txt"]},
+      "file2-1.txt"
+    ]},
+    "file1-1.txt",
+    "file1-2.txt"
   ]
 }
 
@@ -83,16 +82,16 @@ You can also construct tree with a DSL:
 
 ```ruby
 tree = TTY::Tree.new do
-  node 'dir1' do
-    node 'config.dat'
-    node 'dir2' do
-      node 'dir3' do
-        leaf 'file3-1.txt'
+  node "dir1" do
+    node "config.dat"
+    node "dir2" do
+      node "dir3" do
+        leaf "file3-1.txt"
       end
-      leaf 'file2-1.txt'
+      leaf "file2-1.txt"
     end
-    node 'file1-1.txt'
-    leaf 'file1-2.txt'
+    node "file1-1.txt"
+    leaf "file1-2.txt"
   end
 end
 ```
@@ -112,17 +111,17 @@ puts tree.render
 # └── file1-2.txt
 ```
 
-The `render` call returns a string and leaves it up to api consumer how to handle the tree like output.
+The `render` call returns a string and leaves it up to the consumer how to handle the tree-like output.
 
 ## 2. Interface
 
 ### 2.1 new
 
-In order to create `TTY::Tree` you need to provide either a path to directory which can be a String, Pathname or Dir:
+In order to create `TTY::Tree` you need to provide either a path to directory which can be a `String`, `Pathname` or `Dir`:
 
 ```ruby
 tree = TTY::Tree.new(Dir.pwd)
-tree = TTY::Tree.new('dir-name')
+tree = TTY::Tree.new("dir-name")
 tree = TTY::Tree.new(Pathname.pwd)
 ```
 
@@ -131,7 +130,7 @@ Or hash data structure:
 ```ruby
 data = {
   dir1: [
-    'config.dat',
+    "config.dat",
     ...
   ]
 }
@@ -139,45 +138,45 @@ data = {
 tree = TTY::Tree.new(data)
 ```
 
-As as shortcut notation you can call `[]` like so:
+As a shortcut notation, you can create a tree using `[]` like so:
 
 ```ruby
 tree = TTY::Tree[Dir.pwd]
 ```
 
-You can also use DSL to build tree by using `node` & `leaf`:
+You can also use DSL to build a tree by using `node` and `leaf` methods:
 
 ```ruby
 tree = TTY::Tree.new do
-  node 'dir1' do
-    node 'config.dat'
-    node 'dir2' do
-      node 'dir3' do
-        leaf 'file3-1.txt'
+  node "dir1" do
+    node "config.dat"
+    node "dir2" do
+      node "dir3" do
+        leaf "file3-1.txt"
       end
-      leaf 'file2-1.txt'
+      leaf "file2-1.txt"
     end
-    node 'file1-1.txt'
-    leaf 'file1-2.txt'
+    node "file1-1.txt"
+    leaf "file1-2.txt"
   end
 end
 ```
 
-#### 2.1.1 level
+#### 2.1.1 `:level`
 
 The maximum level of depth for this tree when parsing directory. The initial directory is treated as index `0`.
 
 ```ruby
-tree = TTY::Tree.new('dir-name', level: 2)
+tree = TTY::Tree.new("dir-name", level: 2)
 # => parse directories as deep as 2 levels
 ```
 
 #### 2.1.2 `:file_limit`
 
-Prevent `TTY::Tree` descending directories more than `#` entries:
+Prevent `TTY::Tree` descending directories with more than a given number of entries:
 
 ```ruby
-tree = TTY::Tree.new('dir-name', file_limit: 2)
+tree = TTY::Tree.new("dir-name", file_limit: 2)
 ```
 
 #### 2.1.3 `:show_hidden`
@@ -185,28 +184,26 @@ tree = TTY::Tree.new('dir-name', file_limit: 2)
 In order to for `TTY::Tree` to include hidden files in its output use `:show_hidden` option like so:
 
 ```ruby
-tree = TTY::Tree.new('dir-name', show_hidden: true)
+tree = TTY::Tree.new("dir-name", show_hidden: true)
 ```
 
-#### 2.1.4 only_dirs
+#### 2.1.4 `:only_dirs`
 
 To only display directory entries in the output use `:only_dirs` option:
 
 ```ruby
-tree = TTY::Tree.new('dir-name', only_dirs: true)
+tree = TTY::Tree.new("dir-name", only_dirs: true)
 ```
 
-Listing directories does not inlucde hidden ones. If you wish to show hidden directories as well do:
+By default, hidden directories are not included in the output. If you wish to show hidden directories as well do:
 
 ```ruby
-tree = TTY::Tree.new('dir-name', only_dirs: true, show_hidden: true)
+tree = TTY::Tree.new("dir-name", only_dirs: true, show_hidden: true)
 ```
 
 ### 2.2 render
 
-By deafult content is printed using `TTY::PathRenderer`.
-
-If you prefer a numeric notation of nested content you can use `TTY::NumberRenderer` to enumerates each nested node like so:
+By default, content is printed using `TTY::PathRenderer`. If you prefer a numeric notation of nested content, you can use `TTY::NumberRenderer` to enumerates each nested node like so:
 
 ```ruby
 puts tree.render(as: :number)
@@ -223,7 +220,7 @@ puts tree.render(as: :number)
 
 #### 2.2.1 `:indent`
 
-The number of spaces to use when indenting nested directories. By default `4` spaces are used.
+The number of spaces to use when indenting nested directories. By default, `4` spaces are used.
 
 ```ruby
 tree.render(as: :dir, indent: 2)
